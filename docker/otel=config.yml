@@ -1,0 +1,30 @@
+receivers:
+  otlp:
+    protocols:
+      grpc: {}
+      http: {}
+
+  awsfirehose:
+    endpoint: 0.0.0.0:443
+    record_type: cwmetrics
+    access_key: "otel123"
+    tls:
+      cert_file: "/etc/otelcol/certificate.crt"
+      key_file: "/etc/otelcol/privateKey.key" 
+
+
+exporters:
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+
+  logging:
+    verbosity: detailed
+ 
+  batch: {}
+
+service:
+  pipelines:
+    metrics:
+      receivers: [otlp, awsfirehose]
+      processors: [batch]
+      exporters: [logging, prometheus]

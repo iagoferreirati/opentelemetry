@@ -1,0 +1,25 @@
+services:
+  otel_collector:
+    networks:
+      - backend
+    image: otel/opentelemetry-collector-contrib:latest
+    volumes:
+      - "./otel-collector-config.yml:/etc/otelcol/otel-collector-config.yml"
+      - "/etc/letsencrypt/live/otel.cursodeaws.com.br/fullchain.pem:/etc/otelcol/certificate.crt"
+      - "/etc/letsencrypt/live/otel.cursodeaws.com.br/privkey.pem:/etc/otelcol/privateKey.key"
+    command: --config /etc/otelcol/otel-collector-config.yml
+    ports:
+      - "4318:4318"
+      - "4317:4317"    
+      - "8889:8889" 
+      - "443:443"
+  prometheus:
+    networks:
+      - backend
+    image: prom/prometheus:latest
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"        
+networks:
+  backend:
