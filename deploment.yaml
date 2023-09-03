@@ -30,9 +30,10 @@ spec:
             - name: otlp-http
               containerPort: 4318
               protocol: TCP
-            - name: kinesis
-              containerPort: 8443
-              protocol: TCP
+#(for use with Kinesis)              
+            # - name: kinesis
+            #   containerPort: 8443
+            #   protocol: TCP
         volumeMounts:
         - name: otel-config
           mountPath: /etc/otelcol-contrib
@@ -72,6 +73,7 @@ data:
           grpc: {}
           http: {}
 
+      # (for use with Kinesis)
       # awsfirehose:
       #   endpoint: 0.0.0.0:8443
       #   record_type: cwmetrics
@@ -95,7 +97,7 @@ data:
           processors: [batch]
           exporters: [prometheus, logging]
 
-
+  # (for use with Kinesis)
   # certificate.crt: |-
   #   -----BEGIN CERTIFICATE-----
   #   MIIELzCCAxegAwIBAgISA7F0O7RDptQs52yd07Idn/WzMA0GCSqGSIb3DQEBCwUA
