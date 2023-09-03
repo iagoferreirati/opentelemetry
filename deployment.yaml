@@ -56,8 +56,15 @@ spec:
   selector:
     app: collector
   ports:
-    - port: 8443
-      targetPort: 8443
+    - name: prometheus-metrics
+      port: 8889
+      targetPort: 8889
+    - name: otlp-grpc
+      port: 4317
+      targetPort: 4317
+    - name: otlp-http      
+      port: 4318
+      targetPort: 4318            
   type: ClusterIP
 ---
 apiVersion: v1
