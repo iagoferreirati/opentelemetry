@@ -1,0 +1,14 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: demo-instrumentation
+  namespace: api-node
+spec:
+  exporter:
+    endpoint: "http://otel-collector-collector.opentelemetry.svc.cluster.local:4317"  
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1"
